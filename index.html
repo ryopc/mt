@@ -603,7 +603,7 @@
     <!-- Sophisticated Description Text -->
     <p id="statusDesc">
       ryopc Global Digital Support をご利用いただきありがとうございます。<br>
-      現在、新機能 of 追加およびサーバー基盤の最適化作業を実施しております。サービス再開まで今しばらくお待ちください。
+      現在、新機能の追加およびサーバー基盤の最適化作業を実施しております。サービス再開まで今しばらくお待ちください。
     </p>
 
     <!-- Tech Diagnostic Log Box -->
@@ -891,11 +891,27 @@
     };
 
     /**
-     * URLのクエリパラメータを解釈します。
+     * URLからステータスコードを判定します。
+     * 1. URLパス (例: /503) を優先的に評価します。
+     * 2. クエリパラメータ (?st=503) をフォールバックとして評価します。
      */
-    function getQueryParam(param) {
+    function getStatusCode() {
+      const path = window.location.pathname;
+      // スラッシュの直後にある3桁の数字をキャッチ
+      const match = path.match(/\/(\d{3})/);
+      
+      if (match && statusConfig[match[1]]) {
+        return match[1];
+      }
+
+      // クエリパラメータのフォールバック (従来の互換性維持)
       const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
+      const querySt = urlParams.get('st');
+      if (querySt && statusConfig[querySt]) {
+        return querySt;
+      }
+
+      return "503"; // 該当しない場合のデフォルト値
     }
 
     /**
@@ -944,12 +960,7 @@
      * ステータスコードに基づく動的テーマ切り替え。
      */
     function applyStatusTheme() {
-      // URLからステータスコード ?st= を解析。ない場合は503をデフォルト
-      let statusCode = getQueryParam('st');
-      if (!statusCode || !statusConfig[statusCode]) {
-        statusCode = "503";
-      }
-
+      const statusCode = getStatusCode();
       const conf = statusConfig[statusCode];
       const localizedContent = conf[currentLang] || conf['ja']; // 該当言語がない場合は日本語にフォールバック
 
@@ -1011,7 +1022,7 @@
     // 初期化関数
     function init() {
       // 1. クエリパラメータから言語を取得 (?lang=en)
-      let initialLang = getQueryParam('lang');
+      let initialLang = new URLSearchParams(window.location.search).get('lang');
       
       // 2. なければブラウザ環境から判定
       if (!initialLang) {
