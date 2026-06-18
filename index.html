@@ -18,29 +18,29 @@
       /* デフォルトカラー（503：インディゴ/ブルーバイオレット） */
       --theme-color: #6366f1;
       --theme-color-rgb: 99, 102, 241;
-      --theme-glow: rgba(99, 102, 241, 0.15);
-      --bg-gradient-start: #070a13;
-      --bg-gradient-end: #0f1123;
+      --theme-glow: rgba(99, 102, 241, 0.2);
+      --bg-color: #02040a;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background-color: #030712;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-color);
       color: #f3f4f6;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      overflow: hidden;
-      padding: 24px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 40px 24px;
       position: relative;
     }
 
     /* ----------------------------------
-       BACKGROUND ANIMATION (SF Organic Light)
+       CYBER DETAILED BACKGROUND (Grid & Scanlines)
        ---------------------------------- */
     .bg-glow-container {
-      position: absolute;
+      position: fixed;
       width: 100%;
       height: 100%;
       top: 0;
@@ -50,73 +50,162 @@
       pointer-events: none;
     }
 
+    /* サイバーテクノロジーグリッド */
+    .bg-grid {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.007) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.007) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-position: center;
+      z-index: 2;
+    }
+
+    /* 微細な走査線 */
+    .bg-scanlines {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.15) 50%
+      );
+      background-size: 100% 4px;
+      z-index: 3;
+    }
+
+    /* 有機的に揺らめくバックライト */
     .bg-glow-orb-1 {
       position: absolute;
-      width: 600px;
-      height: 600px;
+      width: 700px;
+      height: 700px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(var(--theme-color-rgb), 0.12) 0%, rgba(var(--theme-color-rgb), 0) 70%);
-      top: -200px;
-      left: -100px;
-      animation: floatOrb1 20s infinite alternate ease-in-out;
+      background: radial-gradient(circle, rgba(var(--theme-color-rgb), 0.14) 0%, rgba(var(--theme-color-rgb), 0) 70%);
+      top: -250px;
+      left: -150px;
+      animation: floatOrb1 25s infinite alternate ease-in-out;
+      filter: blur(40px);
     }
 
     .bg-glow-orb-2 {
       position: absolute;
-      width: 500px;
-      height: 500px;
+      width: 600px;
+      height: 600px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(var(--theme-color-rgb), 0.08) 0%, rgba(var(--theme-color-rgb), 0) 70%);
-      bottom: -150px;
-      right: -100px;
-      animation: floatOrb2 25s infinite alternate ease-in-out;
+      background: radial-gradient(circle, rgba(var(--theme-color-rgb), 0.09) 0%, rgba(var(--theme-color-rgb), 0) 70%);
+      bottom: -200px;
+      right: -150px;
+      animation: floatOrb2 30s infinite alternate ease-in-out;
+      filter: blur(40px);
     }
 
     @keyframes floatOrb1 {
       0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(80px, 50px) scale(1.1); }
+      100% { transform: translate(120px, 80px) scale(1.1); }
     }
 
     @keyframes floatOrb2 {
       0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(-60px, -80px) scale(1.15); }
+      100% { transform: translate(-90px, -110px) scale(1.15); }
     }
 
     /* ----------------------------------
-       GLASS CONTAINER
+       NEOFUTURIST GLASS CONTAINER
        ---------------------------------- */
     .container {
       position: relative;
       z-index: 10;
       text-align: center;
-      max-width: 540px;
+      max-width: 580px;
       width: 100%;
-      background: rgba(10, 12, 22, 0.45);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(6, 8, 16, 0.72);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
       border-top: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 50px 40px;
-      border-radius: 28px;
+      border-left: 1px solid rgba(255, 255, 255, 0.09);
+      padding: 65px 45px;
+      border-radius: 32px;
       box-shadow: 
-        0 24px 60px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      animation: cardFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        0 30px 70px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(var(--theme-color-rgb), 0.03),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      animation: cardFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* コンテナの四隅にSF風L字パーツを装飾 */
+    .container::before, .container::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-color: rgba(var(--theme-color-rgb), 0.3);
+      border-style: solid;
+      pointer-events: none;
+    }
+    .container::before {
+      top: 20px;
+      left: 20px;
+      border-width: 2px 0 0 2px;
+    }
+    .container::after {
+      bottom: 20px;
+      right: 20px;
+      border-width: 0 2px 2px 0;
     }
 
     @keyframes cardFadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(40px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     /* ----------------------------------
-       CYBER NEON SPINNER
+       LANGUAGE SWITCHER
+       ---------------------------------- */
+    .lang-switcher {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      display: flex;
+      gap: 6px;
+      z-index: 20;
+    }
+
+    .lang-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #9ca3af;
+      font-family: inherit;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .lang-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+    }
+
+    .lang-btn.active {
+      background: var(--theme-color);
+      border-color: var(--theme-color);
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(var(--theme-color-rgb), 0.3);
+    }
+
+    /* ----------------------------------
+       CYBER 3-STAGE NEON SPINNER
        ---------------------------------- */
     .spinner-container {
       position: relative;
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 36px;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 38px;
     }
 
     .spinner-outer {
@@ -125,26 +214,38 @@
       left: 0;
       width: 100%;
       height: 100%;
-      border: 2px solid rgba(255, 255, 255, 0.03);
+      border: 2px solid rgba(255, 255, 255, 0.02);
       border-top: 2px solid var(--theme-color);
       border-right: 2px solid var(--theme-color);
       border-radius: 50%;
-      animation: spinClockwise 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      box-shadow: 0 0 15px var(--theme-glow);
+      animation: spinClockwise 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      filter: drop-shadow(0 0 8px var(--theme-color));
     }
 
     .spinner-inner {
       position: absolute;
-      top: 15px;
-      left: 15px;
-      width: calc(100% - 30px);
-      height: calc(100% - 30px);
-      border: 2px solid rgba(255, 255, 255, 0.02);
+      top: 14px;
+      left: 14px;
+      width: calc(100% - 28px);
+      height: calc(100% - 28px);
+      border: 1px dashed rgba(255, 255, 255, 0.03);
       border-bottom: 2px solid var(--theme-color);
       border-left: 2px solid var(--theme-color);
       border-radius: 50%;
-      opacity: 0.7;
-      animation: spinCounterClockwise 1.2s linear infinite;
+      opacity: 0.8;
+      animation: spinCounterClockwise 1.5s linear infinite;
+    }
+
+    .spinner-core {
+      position: absolute;
+      top: 38px;
+      left: 38px;
+      width: 24px;
+      height: 24px;
+      background-color: var(--theme-color);
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--theme-color), 0 0 40px var(--theme-color);
+      animation: pulseCore 1.5s infinite alternate ease-in-out;
     }
 
     @keyframes spinClockwise {
@@ -157,23 +258,29 @@
       100% { transform: rotate(0deg); }
     }
 
+    @keyframes pulseCore {
+      0% { transform: scale(0.75); opacity: 0.5; }
+      100% { transform: scale(1.1); opacity: 1; }
+    }
+
     /* ----------------------------------
-       TYPOGRAPHY
+       TYPOGRAPHY & BADGE
        ---------------------------------- */
     .status-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: rgba(var(--theme-color-rgb), 0.1);
-      border: 1px solid rgba(var(--theme-color-rgb), 0.2);
+      gap: 10px;
+      background: rgba(var(--theme-color-rgb), 0.08);
+      border: 1px solid rgba(var(--theme-color-rgb), 0.25);
       color: var(--theme-color);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
+      letter-spacing: 0.18em;
+      padding: 8px 18px;
+      border-radius: 6px;
+      margin-bottom: 26px;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
-      padding: 6px 14px;
-      border-radius: 100px;
-      margin-bottom: 24px;
+      box-shadow: 0 0 15px rgba(var(--theme-color-rgb), 0.05);
     }
 
     .status-badge::before {
@@ -183,90 +290,282 @@
       background-color: var(--theme-color);
       border-radius: 50%;
       display: inline-block;
-      box-shadow: 0 0 8px var(--theme-color);
+      box-shadow: 0 0 10px var(--theme-color);
+      animation: pulseIndicator 1s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseIndicator {
+      0% { transform: scale(0.8); opacity: 0.6; }
+      100% { transform: scale(1.2); opacity: 1; }
     }
 
     h1 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       font-size: 1.85rem;
       font-weight: 800;
       line-height: 1.35;
-      margin-bottom: 18px;
-      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
       color: #ffffff;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
     }
 
     p {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       color: #9ca3af;
       font-size: 0.95rem;
-      line-height: 1.7;
-      margin-bottom: 36px;
-      font-weight: 400;
+      line-height: 1.8;
+      margin-bottom: 28px;
     }
 
     /* ----------------------------------
-       INTERACTIVE BUTTON
+       SYSTEM LOGS (Tech Display Area)
+       ---------------------------------- */
+    .system-log-box {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 10px;
+      padding: 12px 18px;
+      margin-bottom: 34px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.72rem;
+      color: #6b7280;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .log-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .log-status {
+      color: var(--theme-color);
+      font-weight: 700;
+      text-shadow: 0 0 8px rgba(var(--theme-color-rgb), 0.3);
+    }
+
+    /* ----------------------------------
+       INTERACTIVE BUTTONS
        ---------------------------------- */
     .btn-container {
       display: flex;
       justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
     }
 
     .status-btn {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: var(--theme-color);
-      color: #ffffff;
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.9rem;
-      padding: 14px 32px;
-      border-radius: 14px;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 4px 25px rgba(var(--theme-color-rgb), 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.88rem;
+      padding: 14px 28px;
+      border-radius: 12px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid transparent;
+      cursor: pointer;
     }
 
-    .status-btn:hover {
+    .btn-primary {
+      background: var(--theme-color);
+      color: #ffffff;
+      box-shadow: 
+        0 4px 20px rgba(var(--theme-color-rgb), 0.25),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    }
+
+    .btn-primary:hover {
       background: #ffffff;
-      color: #030712;
+      color: #02040a;
       transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(255, 255, 255, 0.15);
-      border-color: #ffffff;
+      box-shadow: 
+        0 15px 30px rgba(255, 255, 255, 0.15),
+        0 0 15px rgba(var(--theme-color-rgb), 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.02);
+      color: #d1d5db;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(5px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(var(--theme-color-rgb), 0.08);
+      color: #ffffff;
+      border-color: rgba(var(--theme-color-rgb), 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(var(--theme-color-rgb), 0.1);
     }
 
     .status-btn svg {
-      transition: transform 0.25s ease;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .status-btn:hover svg {
-      transform: translateX(3px);
+      transform: translate(2px, -1px);
+    }
+
+    /* ----------------------------------
+       COLLAPSIBLE SUPPORT PANEL (Contact)
+       ---------------------------------- */
+    .contact-accordion {
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+      padding-top: 25px;
+      text-align: left;
+    }
+
+    .accordion-trigger {
+      width: 100%;
+      background: none;
+      border: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #9ca3af;
+      font-size: 0.88rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 10px 0;
+      transition: color 0.25s;
+    }
+
+    .accordion-trigger:hover {
+      color: var(--theme-color);
+    }
+
+    .accordion-icon {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      color: var(--theme-color);
+    }
+
+    .accordion-trigger.active .accordion-icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .form-card {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #94a3b8;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-control {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--theme-color);
+      box-shadow: 0 0 10px rgba(var(--theme-color-rgb), 0.15);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: rgba(var(--theme-color-rgb), 0.12);
+      border: 1px solid rgba(var(--theme-color-rgb), 0.4);
+      color: var(--theme-color);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .submit-btn:hover {
+      background: var(--theme-color);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(var(--theme-color-rgb), 0.3);
     }
 
     /* ----------------------------------
        FOOTER
        ---------------------------------- */
     .footer {
-      margin-top: 45px;
+      margin-top: 35px;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
       padding-top: 24px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: #4b5563;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     }
 
-    /* Responsive adjustments */
+    /* ----------------------------------
+       RESPONSIVE DESIGN
+       ---------------------------------- */
     @media (max-width: 640px) {
       .container {
         padding: 40px 24px;
+        border-radius: 24px;
       }
       h1 {
         font-size: 1.5rem;
       }
       p {
         font-size: 0.88rem;
+        line-height: 1.7;
+      }
+      .system-log-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 10px 14px;
+      }
+      .btn-container {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .status-btn {
+        width: 100%;
+        justify-content: center;
       }
     }
   </style>
@@ -275,15 +574,24 @@
 
   <!-- Dynamic Glowing Background -->
   <div class="bg-glow-container">
+    <div class="bg-grid"></div>
+    <div class="bg-scanlines"></div>
     <div class="bg-glow-orb-1" id="orb1"></div>
     <div class="bg-glow-orb-2" id="orb2"></div>
   </div>
 
   <div class="container">
+    <!-- Language Selector Top-Right -->
+    <div class="lang-switcher">
+      <button class="lang-btn" id="langJaBtn" onclick="setLanguage('ja')">JP</button>
+      <button class="lang-btn" id="langEnBtn" onclick="setLanguage('en')">EN</button>
+    </div>
+
     <!-- Spinning Technology Ring -->
     <div class="spinner-container">
       <div class="spinner-outer" id="spinOuter"></div>
       <div class="spinner-inner" id="spinInner"></div>
+      <div class="spinner-core" id="spinCore"></div>
     </div>
     
     <!-- Code / Status Badge -->
@@ -297,98 +605,428 @@
       ryopc Global Digital Support をご利用いただきありがとうございます。<br>
       現在、新機能の追加およびサーバー基盤の最適化作業を実施しております。サービス再開まで今しばらくお待ちください。
     </p>
+
+    <!-- Tech Diagnostic Log Box -->
+    <div class="system-log-box">
+      <div class="log-line">
+        <span id="logSecLabel">SECURITY: </span>
+        <span class="log-status" id="logSec">ENCRYPTED_SSL</span>
+      </div>
+      <div class="log-line">
+        <span id="logSysLabel">SYSTEM_STATUS: </span>
+        <span class="log-status" id="logSys">DEGRADED</span>
+      </div>
+    </div>
     
-    <!-- Action Button -->
-    <div class="btn-container">
-      <a href="https://st.ryopc.f5.si" class="status-btn" target="_blank" rel="noopener noreferrer">
-        現在のシステム稼働状況
+    <!-- Action Buttons -->
+    <div class="btn-container" id="btnContainer">
+      <!-- ホームに戻るボタン（リンク先：https://ryopc.f5.si） -->
+      <a href="https://ryopc.f5.si" class="status-btn" id="homeBtn">
+        <span id="homeBtnText">ホームに戻る</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.6667 12.6667V8H5.33333V12.6667M2 6.66667L8 1.33333L14 6.66667V12.6667C14 13.037 13.7893 13.3333 13.3333 13.3333H2.66667C2.21067 13.3333 2 13.037 2 12.6667V6.66667Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <!-- システム稼働状況ボタン -->
+      <a href="https://st.ryopc.f5.si" class="status-btn" id="statusBtn" target="_blank" rel="noopener noreferrer">
+        <span id="statusBtnText">現在のシステム稼働状況</span>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4.66663 11.3333L11.3333 4.66663M11.3333 4.66663H6.66663M11.3333 4.66663V9.3333" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </a>
     </div>
+
+    <!-- Collapsible Support Panel -->
+    <div class="contact-accordion">
+      <button class="accordion-trigger" id="accordionTrigger">
+        <span id="contactTitleText">サポートへ直接問い合わせる</span>
+        <svg class="accordion-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 5L8 11L14 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="accordion-content" id="accordionContent">
+        <div class="form-card">
+          <form id="contact-form" action="https://form-api.ryopc.f5.si/" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="_redirect" value="https://game-ryo.is-a.dev">
+            
+            <div class="form-group">
+              <label for="form-name" id="labelName">お名前</label>
+              <input type="text" id="form-name" name="name" class="form-control" required placeholder="デジタルユーザー名">
+            </div>
+            
+            <div class="form-group">
+              <label for="form-email" id="labelEmail">メールアドレス</label>
+              <input type="email" id="form-email" name="email" class="form-control" required placeholder="your@email.com">
+            </div>
+            
+            <div class="form-group">
+              <label for="form-message" id="labelMessage">メッセージ</label>
+              <textarea id="form-message" name="message" class="form-control" rows="4" required placeholder="技術的なお問い合わせやご報告内容を入力してください..."></textarea>
+            </div>
+            
+            <div style="text-align: center; margin-top: 1.5rem;">
+              <button type="submit" class="submit-btn" id="submitBtnText">送信を実行する</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     
     <!-- Cyber Security / Global Brand footer -->
     <div class="footer">
-      © ryopc Global Digital Support / ryopcCEO
+      © ryopc Global Digital Support // ryopcCEO
     </div>
   </div>
 
   <script>
+    // グローバルな現在の言語状態
+    let currentLang = 'ja';
+
+    // 一般的なUIパーツの静的翻訳リソース
+    const uiI18n = {
+      ja: {
+        contact_title: "サポートへ直接問い合わせる",
+        contact_name: "お名前",
+        contact_email: "メールアドレス",
+        contact_message: "メッセージ",
+        contact_submit: "送信を実行する",
+        placeholder_name: "デジタルユーザー名",
+        placeholder_email: "your@email.com",
+        placeholder_message: "技術的なお問い合わせやご報告内容を入力してください...",
+        home_btn: "ホームに戻る",
+        status_btn: "現在のシステム稼働状況",
+        security_label: "SECURITY: ",
+        status_label: "SYSTEM_STATUS: "
+      },
+      en: {
+        contact_title: "Contact Support Directly",
+        contact_name: "Name",
+        contact_email: "Email Address",
+        contact_message: "Message",
+        contact_submit: "Submit Message",
+        placeholder_name: "Digital Username",
+        placeholder_email: "your@email.com",
+        placeholder_message: "Please enter your technical inquiry or bug report here...",
+        home_btn: "Return to Home",
+        status_btn: "Current System Status",
+        security_label: "SECURITY: ",
+        status_label: "SYSTEM_STATUS: "
+      }
+    };
+
+    // 全10種類の多様なステータステーブル定義（日本語と英語に対応）
+    const statusConfig = {
+      "400": {
+        badge: "HTTP 400 : Bad Request",
+        ja: {
+          title: "正しくないリクエストです",
+          desc: "送信されたデジタルリクエストの構文、またはパラメータに誤りがあるため処理を進めることができません。<br>ブラウザのキャッシュをクリアしていただくか、指定URLが最新であるかをご確認ください。"
+        },
+        en: {
+          title: "Bad Request",
+          desc: "We cannot process your request due to invalid syntax or incorrect parameters.<br>Please try clearing your browser cache or check if the target URL is up-to-date."
+        },
+        color: "#f59e0b", // ディープ・イエロー
+        rgb: "245, 158, 11",
+        showHome: true,
+        showStatus: true,
+        logSec: "BAD_SYNTAX_FLAGGED",
+        logSys: "CLIENT_DISCREPANCY"
+      },
+      "401": {
+        badge: "HTTP 401 : Unauthorized",
+        ja: {
+          title: "アクセス権限が確認できませんでした",
+          desc: "このデジタルスペースにアクセスするには、正規のセキュリティ認証が必要です。<br>ログインステータスが有効であるか、アカウント情報が正しく同期されているかご確認ください。"
+        },
+        en: {
+          title: "Unauthorized Access",
+          desc: "Valid security authentication is required to access this digital node.<br>Please ensure that your login status is active and your credentials are correctly synchronized."
+        },
+        color: "#fb923c", // ライトオレンジ
+        rgb: "251, 146, 60",
+        showHome: true,
+        showStatus: true,
+        logSec: "NO_AUTH_TOKEN",
+        logSys: "ACCESS_PREVENTED"
+      },
+      "403": {
+        badge: "HTTP 403 : Forbidden",
+        ja: {
+          title: "アクセスへの制限が適用されました",
+          desc: "お客様のセキュリティ保護、または指定リソースへのアクセス制限により、このセクションへの直接の立ち入りが制限されています。<br>システム的な誤検知と考えられる場合は、以下の窓口よりサポートグループまで直接お問い合わせください。"
+        },
+        en: {
+          title: "Access Restricted",
+          desc: "Direct entry to this section has been restricted for security shielding or administrator permissions.<br>If you believe this is a technical error, please contact our support group using the window below."
+        },
+        color: "#eab308", // ゴールドイエロー
+        rgb: "234, 179, 8",
+        showHome: true,
+        showStatus: true,
+        logSec: "ACCESS_DENIED",
+        logSys: "SHIELD_ENGAGED"
+      },
+      "404": {
+        badge: "HTTP 404 : Resource Not Found",
+        ja: {
+          title: "対象のページは見つかりませんでした",
+          desc: "お探しのデジタルリソース、またはリクエストされたディレクトリは現在存在しないか、変更されています。<br>URLに誤りがないかご確認ください。サポートセンターの最新情報は、以下のシステム稼働状況よりご覧いただけます。"
+        },
+        en: {
+          title: "Page Not Found",
+          desc: "The digital resource or requested directory you are looking for does not exist or has been relocated.<br>Please double-check the path syntax. The latest hub statuses can be checked via the active logs below."
+        },
+        color: "#06b6d4", // サイバー・シアン
+        rgb: "6, 182, 212",
+        showHome: true, 
+        showStatus: true,
+        logSec: "ROUTE_UNRESOLVED",
+        logSys: "STABLE_PORTAL"
+      },
+      "408": {
+        badge: "HTTP 408 : Request Timeout",
+        ja: {
+          title: "リクエストがタイムアウトしました",
+          desc: "サーバーへのデータリクエスト処理に要する制限時間を超過しました。<br>ネットワークの接続強度を確認、もしくは接続経路を再セットアップいただき、再度ウェブページの再読み込みをお試しください。"
+        },
+        en: {
+          title: "Request Timeout",
+          desc: "The connection to our servers exceeded the allocated transmission threshold limit.<br>Please check your local gateway latency, reset your terminal network, and attempt to reload the portal."
+        },
+        color: "#fbbf24", // 警告アンバー
+        rgb: "251, 191, 36",
+        showHome: true,
+        showStatus: true,
+        logSec: "LATENCY_OVERLOAD",
+        logSys: "CONNECTION_ABORT"
+      },
+      "429": {
+        badge: "HTTP 429 : Too Many Requests",
+        ja: {
+          title: "リクエストの上限に達しました",
+          desc: "短時間における高頻度な自動アクセス、あるいは一時的な過剰負荷が検知されました。<br>全体の安全と安定稼働を守るための保護セキュリティです。恐れ入りますが、数分経ってから再度アクセスしてください。"
+        },
+        en: {
+          title: "Too Many Requests",
+          desc: "Extremely high frequency or unusual bandwidth spike has been temporarily flagged on your route.<br>This is an automated safety shield. Please wait a few minutes before requesting more data stream."
+        },
+        color: "#10b981", // エメラルド・グリーン
+        rgb: "16, 185, 129",
+        showHome: true,
+        showStatus: true,
+        logSec: "RATE_LIMITED",
+        logSys: "TRAFFIC_THROTTLED"
+      },
+      "500": {
+        badge: "HTTP 500 : Internal Error",
+        ja: {
+          title: "サーバー内部で問題が発生いたしました",
+          desc: "現在、グローバルインフラへのデータ転送プロセスにおいて、想定外の一時的な内部エラーが発生しました。<br>技術チームが即座にエラーログをキャッチし、復旧にあたっています。そのまま復旧まで今しばらくお待ちください。"
+        },
+        en: {
+          title: "Internal Server Error",
+          desc: "An unexpected configuration breakdown occurred during cloud node packet transitions.<br>Our engineering division has actively caught the diagnostic log and is processing repairs. Thank you for your patience."
+        },
+        color: "#f43f5e", // クリムゾン・レッド
+        rgb: "244, 63, 94",
+        showHome: true,
+        showStatus: true,
+        logSec: "SECURE_SHUTDOWN",
+        logSys: "ERROR_RECOVERING"
+      },
+      "502": {
+        badge: "HTTP 502 : Bad Gateway",
+        title: "中継サーバーから異常応答がありました",
+        ja: {
+          title: "中継サーバーから異常応答がありました",
+          desc: "アクセス元のサーバーと当システムの通信を仲介するゲートウェイサーバー、またはプロキシが異常な信号を受け取りました。<br>一時的なパケットの不整合の可能性があります。しばらくしてからの接続回復をお待ちください。"
+        },
+        en: {
+          title: "Bad Gateway",
+          desc: "The proxy server mediating your entry received an invalid response from upstream servers.<br>This usually points to a momentary alignment error. Connectivity should recover shortly."
+        },
+        color: "#8b5cf6", // ロイヤル・バイオレット
+        rgb: "139, 92, 246",
+        showHome: true,
+        showStatus: true,
+        logSec: "PROXY_BAD_RESPONSE",
+        logSys: "GATEWAY_ERROR"
+      },
+      "503": {
+        badge: "HTTP 503 : Under Maintenance",
+        ja: {
+          title: "只今、システム調整を行っています",
+          desc: "ryopc Global Digital Support をご利用いただきありがとうございます。<br>現在、新しいデジタル製品・機能のシームレスな統合、およびコア基盤の最適化作業を実施しております。すべてのデジタルデータは完全に保護されています。"
+        },
+        en: {
+          title: "System Maintenance Underway",
+          desc: "Thank you for connecting with ryopc Global Digital Support.<br>We are upgrading our microservice instances to implement fresh client features and secure overall cloud integrity. All system databases are fully protected."
+        },
+        color: "#6366f1", // インディゴ・パープル
+        rgb: "99, 102, 241",
+        showHome: false, // メンテナンス中はホームにアクセスできない前提のため非表示
+        showStatus: true,
+        logSec: "ENCRYPTED_SSL",
+        logSys: "MAINTENANCE_ACTIVE"
+      },
+      "504": {
+        badge: "HTTP 504 : Gateway Timeout",
+        ja: {
+          title: "上流サーバーからの応答がありません",
+          desc: "背後にある管理データベース、もしくは認証サーバーから規定時間内に適正なレスポンスを受け取ることができませんでした。<br>一時的なルーティングサーバーの不調、または負荷ピークの可能性があります。復旧をお待ちください。"
+        },
+        en: {
+          title: "Gateway Timeout Error",
+          desc: "The gatekeeper node failed to receive a timely handshake from our background directory databases.<br>The upstream channel might be experiencing high load density. Normal state will resume shortly."
+        },
+        color: "#ec4899", // ディープ・ピンク
+        rgb: "236, 72, 153",
+        showHome: true,
+        showStatus: true,
+        logSec: "UPSTREAM_TIMEOUT",
+        logSys: "ROUTE_TIMED_OUT"
+      }
+    };
+
     /**
-     * URLのクエリパラメータを解釈し、対応するステータスコードに適合した
-     * サイバーモダンデザイン、テキスト、テーマ色に動的書き換えを行います。
+     * URLのクエリパラメータを解釈します。
      */
     function getQueryParam(param) {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(param);
     }
 
-    // ステータステーブル定義（ゲーム要素を一切含まず、極めて高品質なテキストと色で設定）
-    const statusConfig = {
-      "503": {
-        badge: "HTTP 503 : Under Maintenance",
-        title: "只今、システム調整を行っています",
-        desc: "ryopc Global Digital Support をご利用いただきありがとうございます。<br>現在、新しいデジタル体験の統合、およびサーバー基盤の性能・セキュリティ向上アップデートを行っています。すべてのデータと接続の安全を維持したまま、まもなく完了いたします。",
-        color: "#6366f1", // インディゴ・パープル
-        rgb: "99, 102, 241"
-      },
-      "500": {
-        badge: "HTTP 500 : Internal Error",
-        title: "サーバーで問題が発生いたしました",
-        desc: "現在、グローバルインフラサーバーへのアクセスにおいて、一時的な内部エラーが検知されました。<br>当システムエンジニアチームが迅速な状況追跡と復旧処理を開始しております。ご不便をおかけしますが、再接続までそのままお待ちください。",
-        color: "#ef4444", // クリムゾン・レッド
-        rgb: "239, 68, 68"
-      },
-      "404": {
-        badge: "HTTP 404 : Resource Not Found",
-        title: "対象のページは見つかりませんでした",
-        desc: "お探しのデジタルリソース、またはリクエストされたディレクトリは現在存在しないか、変更されています。<br>URLに誤りがないかご確認ください。当サポートセンターの他サービス、あるいはシステム最新情報は以下のステータスページよりご覧いただけます。",
-        color: "#06b6d4", // サイバー・シアン
-        rgb: "6, 182, 212"
-      },
-      "403": {
-        badge: "HTTP 403 : Forbidden",
-        title: "アクセスへの制限が適用されました",
-        desc: "お客様のセキュリティ保護、または指定リソースへの管理者権限不足により、このセクションへの直接のアクセスが制限されています。<br>これがシステム的な誤検知と考えられる場合は、当サポートグループまでご連絡いただくか、稼働状態をご確認ください。",
-        color: "#f59e0b", // アンバー（オレンジ/ゴールド）
-        rgb: "245, 158, 11"
-      },
-      "429": {
-        badge: "HTTP 429 : Too Many Requests",
-        title: "リクエストの上限に達しました",
-        desc: "短時間における極めて高い頻度でのトラフィックアクセス、あるいは一時的なセキュリティスパイクが検出されました。<br>サービス品質とシステム保護のための一時的な自動レート制限です。数分おいてから再度アクセスをお試しください。",
-        color: "#10b981", // フォレスト・エメラルドグリーン
-        rgb: "16, 185, 129"
-      }
-    };
+    /**
+     * 多言語化された共通UIコンポーネントを適用します。
+     */
+    function applyStaticI18n() {
+      const texts = uiI18n[currentLang];
+      
+      // お問い合わせアコーディオン
+      document.getElementById('contactTitleText').innerText = texts.contact_title;
+      document.getElementById('labelName').innerText = texts.contact_name;
+      document.getElementById('labelEmail').innerText = texts.contact_email;
+      document.getElementById('labelMessage').innerText = texts.contact_message;
+      document.getElementById('submitBtnText').innerText = texts.contact_submit;
+      
+      // プレースホルダーの更新
+      document.getElementById('form-name').placeholder = texts.placeholder_name;
+      document.getElementById('form-email').placeholder = texts.placeholder_email;
+      document.getElementById('form-message').placeholder = texts.placeholder_message;
 
+      // ボタン
+      document.getElementById('homeBtnText').innerText = texts.home_btn;
+      document.getElementById('statusBtnText').innerText = texts.status_btn;
+
+      // システムログヘッダー
+      document.getElementById('logSecLabel').innerText = texts.security_label;
+      document.getElementById('logSysLabel').innerText = texts.status_label;
+    }
+
+    /**
+     * 言語を変更し、UI全体をアップデートします。
+     */
+    function setLanguage(lang) {
+      currentLang = lang;
+      
+      // ボタンのactiveクラスをトグル
+      document.getElementById('langJaBtn').classList.toggle('active', lang === 'ja');
+      document.getElementById('langEnBtn').classList.toggle('active', lang === 'en');
+
+      // 静的UIと言語依存のステータスデータを適用
+      applyStaticI18n();
+      applyStatusTheme();
+    }
+
+    /**
+     * ステータスコードに基づく動的テーマ切り替え。
+     */
     function applyStatusTheme() {
-      // ?st=xxx からコードを取得。ない場合は 503 とする
+      // URLからステータスコード ?st= を解析。ない場合は503をデフォルト
       let statusCode = getQueryParam('st');
       if (!statusCode || !statusConfig[statusCode]) {
         statusCode = "503";
       }
 
       const conf = statusConfig[statusCode];
+      const localizedContent = conf[currentLang] || conf['ja']; // 該当言語がない場合は日本語にフォールバック
 
-      // 各要素の書き換え
+      // 各UI要素をスマートに置換
       document.getElementById('statusBadge').innerHTML = conf.badge;
-      document.getElementById('statusTitle').innerHTML = conf.title;
-      document.getElementById('statusDesc').innerHTML = conf.desc;
+      document.getElementById('statusTitle').innerHTML = localizedContent.title;
+      document.getElementById('statusDesc').innerHTML = localizedContent.desc;
+      
+      // ログデータの反映
+      document.getElementById('logSec').innerHTML = conf.logSec;
+      document.getElementById('logSys').innerHTML = conf.logSys;
 
-      // テーマ色変更のためのCSS変数適応
+      // CSSカスタマイズ用変数の上書き（バインディング）
       const root = document.documentElement;
       root.style.setProperty('--theme-color', conf.color);
       root.style.setProperty('--theme-color-rgb', conf.rgb);
       root.style.setProperty('--theme-glow', `rgba(${conf.rgb}, 0.2)`);
 
-      // ページタイトルも連動してスマートに変更
+      // ボタンの出現コントロール
+      const homeBtn = document.getElementById('homeBtn');
+      const statusBtn = document.getElementById('statusBtn');
+
+      if (conf.showHome && conf.showStatus) {
+        homeBtn.style.display = 'inline-flex';
+        homeBtn.className = 'status-btn btn-primary';
+        statusBtn.style.display = 'inline-flex';
+        statusBtn.className = 'status-btn btn-secondary';
+      } else if (conf.showHome) {
+        homeBtn.style.display = 'inline-flex';
+        homeBtn.className = 'status-btn btn-primary';
+        statusBtn.style.display = 'none';
+      } else if (conf.showStatus) {
+        homeBtn.style.display = 'none';
+        statusBtn.style.display = 'inline-flex';
+        statusBtn.className = 'status-btn btn-primary';
+      } else {
+        homeBtn.style.display = 'none';
+        statusBtn.style.display = 'none';
+      }
+
+      // ドキュメントタイトルも変更
       document.title = `${conf.badge.split(' : ')[0]} | ryopc Global Digital Support`;
     }
 
-    // 読み込み時に即実行
-    window.onload = applyStatusTheme;
+    // アコーディオンのインタラクション（開閉処理）
+    const trigger = document.getElementById('accordionTrigger');
+    const content = document.getElementById('accordionContent');
+
+    trigger.addEventListener('click', () => {
+      trigger.classList.toggle('active');
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+      } else {
+        // スムーズなアニメーション展開
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    });
+
+    // 初期化関数
+    function init() {
+      // 1. クエリパラメータから言語を取得 (?lang=en)
+      let initialLang = getQueryParam('lang');
+      
+      // 2. なければブラウザ環境から判定
+      if (!initialLang) {
+        const browserLang = navigator.language || navigator.userLanguage;
+        initialLang = (browserLang && browserLang.startsWith('ja')) ? 'ja' : 'en';
+      }
+
+      // 言語設定の正規化
+      initialLang = (initialLang === 'ja' || initialLang === 'en') ? initialLang : 'ja';
+      
+      setLanguage(initialLang);
+    }
+
+    // 起動時に動的テーマ変更を適用
+    window.onload = init;
   </script>
 </body>
 </html>
