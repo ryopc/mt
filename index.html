@@ -3,130 +3,392 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>メンテナンス中 | ryopc Global Digital Support</title>
+  <title>System Status | ryopc Global Digital Support</title>
   <style>
-    /* 全体のモダンなダークモード風スタイル */
+    /* ----------------------------------
+       RESET & BASE STYLES
+       ---------------------------------- */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+
+    :root {
+      /* デフォルトカラー（503：インディゴ/ブルーバイオレット） */
+      --theme-color: #6366f1;
+      --theme-color-rgb: 99, 102, 241;
+      --theme-glow: rgba(99, 102, 241, 0.15);
+      --bg-gradient-start: #070a13;
+      --bg-gradient-end: #0f1123;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #030712;
+      color: #f3f4f6;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       overflow: hidden;
-      padding: 20px;
-    }
-    /* 中央のカードコンテナ */
-    .container {
-      text-align: center;
-      max-width: 500px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px rgba(255, 255, 255, 0.08) solid;
-      padding: 40px 30px;
-      border-radius: 24px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-      animation: fadeIn 0.8s ease-out;
-    }
-    /* くるくる回るおしゃれなローディングアニメーション */
-    .icon-wrapper {
+      padding: 24px;
       position: relative;
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 30px;
     }
-    .spinner {
+
+    /* ----------------------------------
+       BACKGROUND ANIMATION (SF Organic Light)
+       ---------------------------------- */
+    .bg-glow-container {
+      position: absolute;
       width: 100%;
       height: 100%;
-      border: 4px rgba(255, 255, 255, 0.1) solid;
-      border-top: 4px #6366f1 solid;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .bg-glow-orb-1 {
+      position: absolute;
+      width: 600px;
+      height: 600px;
       border-radius: 50%;
-      animation: spin 1.5s linear infinite;
+      background: radial-gradient(circle, rgba(var(--theme-color-rgb), 0.12) 0%, rgba(var(--theme-color-rgb), 0) 70%);
+      top: -200px;
+      left: -100px;
+      animation: floatOrb1 20s infinite alternate ease-in-out;
     }
-    /* メインタイトル */
-    h1 {
-      font-size: 1.8rem;
+
+    .bg-glow-orb-2 {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(var(--theme-color-rgb), 0.08) 0%, rgba(var(--theme-color-rgb), 0) 70%);
+      bottom: -150px;
+      right: -100px;
+      animation: floatOrb2 25s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatOrb1 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(80px, 50px) scale(1.1); }
+    }
+
+    @keyframes floatOrb2 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-60px, -80px) scale(1.15); }
+    }
+
+    /* ----------------------------------
+       GLASS CONTAINER
+       ---------------------------------- */
+    .container {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 540px;
+      width: 100%;
+      background: rgba(10, 12, 22, 0.45);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 50px 40px;
+      border-radius: 28px;
+      box-shadow: 
+        0 24px 60px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      animation: cardFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes cardFadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ----------------------------------
+       CYBER NEON SPINNER
+       ---------------------------------- */
+    .spinner-container {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 36px;
+    }
+
+    .spinner-outer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 2px solid rgba(255, 255, 255, 0.03);
+      border-top: 2px solid var(--theme-color);
+      border-right: 2px solid var(--theme-color);
+      border-radius: 50%;
+      animation: spinClockwise 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      box-shadow: 0 0 15px var(--theme-glow);
+    }
+
+    .spinner-inner {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: calc(100% - 30px);
+      height: calc(100% - 30px);
+      border: 2px solid rgba(255, 255, 255, 0.02);
+      border-bottom: 2px solid var(--theme-color);
+      border-left: 2px solid var(--theme-color);
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: spinCounterClockwise 1.2s linear infinite;
+    }
+
+    @keyframes spinClockwise {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes spinCounterClockwise {
+      0% { transform: rotate(360deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    /* ----------------------------------
+       TYPOGRAPHY
+       ---------------------------------- */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(var(--theme-color-rgb), 0.1);
+      border: 1px solid rgba(var(--theme-color-rgb), 0.2);
+      color: var(--theme-color);
+      font-size: 0.75rem;
       font-weight: 700;
-      margin-bottom: 16px;
-      letter-spacing: -0.025em;
-      background: linear-gradient(to right, #ffffff, #cbd5e1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
     }
-    /* 説明テキスト */
-    p {
-      color: #94a3b8;
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 32px;
-    }
-    /* Uptimeflareへの誘導ボタン */
-    .status-btn {
+
+    .status-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background-color: var(--theme-color);
+      border-radius: 50%;
       display: inline-block;
-      background: #6366f1;
+      box-shadow: 0 0 8px var(--theme-color);
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      line-height: 1.35;
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    p {
+      color: #9ca3af;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 36px;
+      font-weight: 400;
+    }
+
+    /* ----------------------------------
+       INTERACTIVE BUTTON
+       ---------------------------------- */
+    .btn-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .status-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--theme-color);
       color: #ffffff;
       text-decoration: none;
       font-weight: 600;
       font-size: 0.9rem;
-      padding: 12px 28px;
-      border-radius: 12px;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+      padding: 14px 32px;
+      border-radius: 14px;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 25px rgba(var(--theme-color-rgb), 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
+
     .status-btn:hover {
-      background: #4f46e5;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 24px rgba(99, 102, 241, 0.4);
+      background: #ffffff;
+      color: #030712;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(255, 255, 255, 0.15);
+      border-color: #ffffff;
     }
-    /* フッターテキスト */
+
+    .status-btn svg {
+      transition: transform 0.25s ease;
+    }
+
+    .status-btn:hover svg {
+      transform: translateX(3px);
+    }
+
+    /* ----------------------------------
+       FOOTER
+       ---------------------------------- */
     .footer {
-      margin-top: 40px;
-      font-size: 0.8rem;
-      color: #64748b;
-      letter-spacing: 0.05em;
+      margin-top: 45px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 24px;
+      font-size: 0.75rem;
+      color: #4b5563;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
-    /* アニメーションの定義 */
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .container {
+        padding: 40px 24px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      p {
+        font-size: 0.88rem;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- Dynamic Glowing Background -->
+  <div class="bg-glow-container">
+    <div class="bg-glow-orb-1" id="orb1"></div>
+    <div class="bg-glow-orb-2" id="orb2"></div>
+  </div>
+
   <div class="container">
-    <div class="icon-wrapper">
-      <div class="spinner"></div>
+    <!-- Spinning Technology Ring -->
+    <div class="spinner-container">
+      <div class="spinner-outer" id="spinOuter"></div>
+      <div class="spinner-inner" id="spinInner"></div>
     </div>
     
-    <h1>只今メンテナンス中です</h1>
+    <!-- Code / Status Badge -->
+    <div class="status-badge" id="statusBadge">HTTP 503 : UNDER MAINTENANCE</div>
     
-    <p>
+    <!-- Main Alert Title -->
+    <h1 id="statusTitle">只今、システム調整を行っています</h1>
+    
+    <!-- Sophisticated Description Text -->
+    <p id="statusDesc">
       ryopc Global Digital Support をご利用いただきありがとうございます。<br>
-      現在、新機能の追加およびシステム品質向上のためのアップデートを行っています。完了までしばらくお待ちください。
+      現在、新機能の追加およびサーバー基盤の最適化作業を実施しております。サービス再開まで今しばらくお待ちください。
     </p>
     
-    <!-- UptimeflareのURL（statusサブドメイン）へジャンプするボタン -->
-    <a href="https://st.ryopc.f5.si" class="status-btn" target="_blank" rel="noopener noreferrer">
-      現在の稼働状況を確認する ↗
-    </a>
+    <!-- Action Button -->
+    <div class="btn-container">
+      <a href="https://st.ryopc.f5.si" class="status-btn" target="_blank" rel="noopener noreferrer">
+        現在のシステム稼働状況
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4.66663 11.3333L11.3333 4.66663M11.3333 4.66663H6.66663M11.3333 4.66663V9.3333" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
     
+    <!-- Cyber Security / Global Brand footer -->
     <div class="footer">
       © ryopc Global Digital Support / ryopcCEO
     </div>
   </div>
 
+  <script>
+    /**
+     * URLのクエリパラメータを解釈し、対応するステータスコードに適合した
+     * サイバーモダンデザイン、テキスト、テーマ色に動的書き換えを行います。
+     */
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    // ステータステーブル定義（ゲーム要素を一切含まず、極めて高品質なテキストと色で設定）
+    const statusConfig = {
+      "503": {
+        badge: "HTTP 503 : Under Maintenance",
+        title: "只今、システム調整を行っています",
+        desc: "ryopc Global Digital Support をご利用いただきありがとうございます。<br>現在、新しいデジタル体験の統合、およびサーバー基盤の性能・セキュリティ向上アップデートを行っています。すべてのデータと接続の安全を維持したまま、まもなく完了いたします。",
+        color: "#6366f1", // インディゴ・パープル
+        rgb: "99, 102, 241"
+      },
+      "500": {
+        badge: "HTTP 500 : Internal Error",
+        title: "サーバーで問題が発生いたしました",
+        desc: "現在、グローバルインフラサーバーへのアクセスにおいて、一時的な内部エラーが検知されました。<br>当システムエンジニアチームが迅速な状況追跡と復旧処理を開始しております。ご不便をおかけしますが、再接続までそのままお待ちください。",
+        color: "#ef4444", // クリムゾン・レッド
+        rgb: "239, 68, 68"
+      },
+      "404": {
+        badge: "HTTP 404 : Resource Not Found",
+        title: "対象のページは見つかりませんでした",
+        desc: "お探しのデジタルリソース、またはリクエストされたディレクトリは現在存在しないか、変更されています。<br>URLに誤りがないかご確認ください。当サポートセンターの他サービス、あるいはシステム最新情報は以下のステータスページよりご覧いただけます。",
+        color: "#06b6d4", // サイバー・シアン
+        rgb: "6, 182, 212"
+      },
+      "403": {
+        badge: "HTTP 403 : Forbidden",
+        title: "アクセスへの制限が適用されました",
+        desc: "お客様のセキュリティ保護、または指定リソースへの管理者権限不足により、このセクションへの直接のアクセスが制限されています。<br>これがシステム的な誤検知と考えられる場合は、当サポートグループまでご連絡いただくか、稼働状態をご確認ください。",
+        color: "#f59e0b", // アンバー（オレンジ/ゴールド）
+        rgb: "245, 158, 11"
+      },
+      "429": {
+        badge: "HTTP 429 : Too Many Requests",
+        title: "リクエストの上限に達しました",
+        desc: "短時間における極めて高い頻度でのトラフィックアクセス、あるいは一時的なセキュリティスパイクが検出されました。<br>サービス品質とシステム保護のための一時的な自動レート制限です。数分おいてから再度アクセスをお試しください。",
+        color: "#10b981", // フォレスト・エメラルドグリーン
+        rgb: "16, 185, 129"
+      }
+    };
+
+    function applyStatusTheme() {
+      // ?st=xxx からコードを取得。ない場合は 503 とする
+      let statusCode = getQueryParam('st');
+      if (!statusCode || !statusConfig[statusCode]) {
+        statusCode = "503";
+      }
+
+      const conf = statusConfig[statusCode];
+
+      // 各要素の書き換え
+      document.getElementById('statusBadge').innerHTML = conf.badge;
+      document.getElementById('statusTitle').innerHTML = conf.title;
+      document.getElementById('statusDesc').innerHTML = conf.desc;
+
+      // テーマ色変更のためのCSS変数適応
+      const root = document.documentElement;
+      root.style.setProperty('--theme-color', conf.color);
+      root.style.setProperty('--theme-color-rgb', conf.rgb);
+      root.style.setProperty('--theme-glow', `rgba(${conf.rgb}, 0.2)`);
+
+      // ページタイトルも連動してスマートに変更
+      document.title = `${conf.badge.split(' : ')[0]} | ryopc Global Digital Support`;
+    }
+
+    // 読み込み時に即実行
+    window.onload = applyStatusTheme;
+  </script>
 </body>
 </html>
